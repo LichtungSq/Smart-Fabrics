@@ -1,28 +1,5 @@
 function varargout = HUB(varargin)
-% HUB MATLAB code for HUB.fig
-%      HUB, by itself, creates a new HUB or raises the existing
-%      singleton*.
-%
-%      H = HUB returns the handle to a new HUB or the handle to
-%      the existing singleton*. siqisiqi
-%
-%      HUB('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in HUB.M with the given input arguments.
-%
-%      HUB('Property','Value',...) creates a new HUB or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before HUB_OpeningFcn gets called.  An
-%      unrecognized property name or invalidViconData(handles); value makes property application
-%      stop.  All inputs are passed to HUB_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
-
-% Edit the above text to modify the response to help HUB
-
-% Last Modified by GUIDE v2.5 23-Jul-2018 15:31:23
+% GUI program for communication with Flora
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -55,7 +32,22 @@ function HUB_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for HUB
 handles.output = hObject;
 
-setappdata(handles.btn_start_vicon,'vicon_plot',1);
+% Turn off all warnings
+warning off all;
+
+% Initialize all params
+hasData = false; 	%表征串口是否接收到数据
+isShow = false;  	%表征是否正在进行数据显示，即是否正在执行函数dataDisp
+isStopDisp = false;  	%表征是否按下了【停止显示】按钮
+numRecv = 0;    	%接收字符计数
+strRecv = '';   		%已接收的字符串
+
+% Bind params to the hObject handler
+setappdata(hObject, 'hasData', hasData);
+setappdata(hObject, 'strRec', strRecv);
+setappdata(hObject, 'numRec', numRecv);
+setappdata(hObject, 'isShow', isShow);
+setappdata(hObject, 'isStopDisp', isStopDisp);
 
 % Update handles structure
 guidata(hObject, handles);
@@ -73,6 +65,13 @@ function varargout = HUB_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+end
+
+% --- Executes during object creation, after setting all properties.
+function btn_start_vicon_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to btn_start_vicon (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
 end
 
 % --- Executes on button press in btn_start_vicon.
@@ -198,6 +197,12 @@ function weightSide_CreateFcn(hObject, eventdata, handles)
     end
 end
 
+function btn_end_point_CreateFcn(hObject, eventdata, handles)
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+end
+
 % --- Executes on button press in btn_end_point.
 function btn_end_point_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_end_point (see GCBO)
@@ -240,6 +245,14 @@ function port_CreateFcn(hObject, eventdata, handles)
     if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
         set(hObject,'BackgroundColor','white');
     end
+end
+
+
+% --- Executes during object creation, after setting all properties.
+function btn_end_vicon_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to btn_end_vicon (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
 end
 
 % --- Executes on button press in btn_end_vicon.

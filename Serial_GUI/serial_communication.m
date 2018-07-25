@@ -62,8 +62,6 @@ guidata(hObject, handles);
 function varargout = serial_communication_OutputFcn(hObject, eventdata, handles) 
 varargout{1} = handles.output;
 
-function com_Callback(hObject, ~, handles)
-
 function com_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
