@@ -112,6 +112,8 @@ handles.s4.YLim = [0 255];
 
 startTime = datetime('now','Format','HH:mm:ss.SSSSSS');
 
+% siqi hen li hai
+
 global t;
 global buf_len
 global buf_data_1
