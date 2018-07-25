@@ -26,7 +26,7 @@ function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4, star
        
        buffer.buf_data_1 = [buffer.buf_data_1(2:end); value_1];
        if buffer.buf_data_1(1) ~= 0
-           buffer.buf_data_filtered_1 = sgolayfilt(double(buffer.buf_data_1),3,7);
+           buffer.buf_data_filtered_1 = sgolayfilt(double(buffer.buf_data_1),1,11);
        end       
 
        % Add points to animation
