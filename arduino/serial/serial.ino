@@ -18,7 +18,7 @@ int outputValue_4 = 0;        // value output to the PWM (analog out)
 
 void setup() {
 	// initialize serial communications at 9600 bps:
-	Serial.begin(115200);
+	Serial.begin(9600);
 }
 
 void loop() {
@@ -44,17 +44,24 @@ void loop() {
 
 	// print the results to the Serial Monitor:
 	Serial.print(outputValue_1);
-	Serial.println(" s1");
+	Serial.println("a");
   Serial.flush();
 	Serial.print(outputValue_2);
-	Serial.println(" s2");
+	Serial.println("b");
   Serial.flush();
 	Serial.print(outputValue_3);
-	Serial.println(" s3");
+	Serial.println("c");
   Serial.flush();
 	Serial.print(outputValue_4);
-	Serial.println(" s4");
+	Serial.println("d");
 	Serial.flush();
+
+  // int a = analogRead(A11);
+  // char buffer_tmp[2];
+  // buffer_tmp[0] = a >> 6 + offset;
+  // buffer_tmp[1] = a & 0xFF00 + offset; //offset = 128
+  // Serial.write(buffer_tmp,2);
+  // Serial.write(10);
 
 	// Serial.print(outputValue_2);
 	// Serial.println(" s2");
