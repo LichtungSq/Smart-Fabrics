@@ -3,7 +3,7 @@ function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4, star
    global buff
 %    /dev/cu.usbmodem1411
 %    readasync(s)      
-%    buf_len = 11;
+   buf_len = 11;
 %    taps = 5;
 %    buf_len = get(gcbl, 'Userdata');
 %    buf_data_1 = get(gcbd, 'Userdata');
@@ -43,8 +43,10 @@ function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4, star
        datetick('x','keeplimits')
        drawnow limitrate
    end
-   data = struct('len',25,'buf_1',buf_data_1,'buf_filtered_1', buf_data_filtered_1);
-   obj.Userdata = data;
+   
+   user_data = obj.UserData;
+   
+   
 %    set(gcbl, 'Userdata', buf_len);
 %    set(gcbd, 'Userdata', buf_data_1);
 %    set(gcbf, 'Userdata', buf_data_filtered_1);   

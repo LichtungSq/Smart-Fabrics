@@ -62,7 +62,7 @@ guidata(hObject, handles);
 
 % UIWAIT makes HUB wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-
+end
 
 % --- Outputs from this function are returned to the command line.
 function varargout = HUB_OutputFcn(hObject, eventdata, handles) 
@@ -73,6 +73,7 @@ function varargout = HUB_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+end
 
 % --- Executes on button press in btn_start_vicon.
 function btn_start_vicon_Callback(hObject, eventdata, handles)
@@ -114,6 +115,7 @@ startTime = datetime('now','Format','HH:mm:ss.SSSSSS');
 
 global t;
 global buff;
+buff = struct();
 buff.buf_len = 25;
 buff.buf_data_1 = zeros(buff.buf_len, 1);
 buff.buf_data_filtered_1 = zeros(buff.buf_len, 1);
@@ -121,10 +123,57 @@ t = timer('StartDelay', 0, 'Period', 0.01, 'ExecutionMode', 'fixedRate','UserDat
     struct('len',25,'buf_1',zeros(25,1),'buf_filtered_1',zeros(25,1)));
 t.StartFcn = @(x,y)disp('Hello World!');
 t.StopFcn = @(x,y)disp('Hello World!');
-t.TimerFcn = {@ReceiveCallback, handles.s, h_voltage_1, h_voltage_2, h_voltage_3, h_voltage_4, ...
-    handles.s1, handles.s2, handles.s3, handles.s4, startTime, handles.fid};
+t.TimerFcn = @ReceiveCallback;
 start(t)
 guidata(hObject, handles);
+
+    function ReceiveCallback(~,~)         
+       flushinput(s)  
+          
+       buf_len = 11;
+    %    taps = 5;
+    %    buf_len = get(gcbl, 'Userdata');
+    %    buf_data_1 = get(gcbd, 'Userdata');
+    %    buf_data_filtered_1 = get(gcbf, 'Userdata');
+       value_1 = fscanf(s, "%d s1\n");
+       value_2 = fscanf(s, "%d s2\n");
+       value_3 = fscanf(s, "%d s3\n");
+       value_4 = fscanf(s, "%d s4\n");
+
+       if ~ischar(value_2) && ~ischar(value_1) && ~ischar(value_3) && ~ischar(value_4)...
+              && ~isempty(value_2) && ~isempty(value_1) && ~isempty(value_3) && ~isempty(value_4) 
+    %        t =  datetime('now','Format','HH:mm:ss.SSSSSS') - startTime;
+           currentTime =  datetime('now','Format','HH:mm:ss.SSSSSS');
+           diff = datenum(currentTime) - datenum(startTime);
+           t = datetime(datevec(diff),'Format','HH:mm:ss.SSSSSS');
+           fprintf(fid,'%s, %d\n\t', t, value_1);
+           fprintf(fid,'%s, %d\n\t', t, value_2);
+           fprintf(fid,'%s, %d\n\t', t, value_3);
+           fprintf(fid,'%s, %d\n\t', t, value_4);       
+
+           buff.buf_data_1 = [buff.buf_data_1(2:end); value_1];
+           if buff.buf_data_1(1) ~= 0
+               buff.buf_data_filtered_1 = sgolayfilt(double(buff.buf_data_1),2,7);
+           end       
+
+           % Add points to animation
+           addpoints(h1, diff*3600*24, buf_data_filtered_1(buf_len));
+           addpoints(h2, diff*3600*24, double(value_2));
+           addpoints(h3, diff*3600*24, double(value_3));
+           addpoints(h4, diff*3600*24, double(value_4));
+
+           ax1.XLim = datenum([diff-seconds(15) diff])*3600*24;
+           ax2.XLim = datenum([diff-seconds(15) diff])*3600*24;
+           ax3.XLim = datenum([diff-seconds(15) diff])*3600*24;
+           ax4.XLim = datenum([diff-seconds(15) diff])*3600*24;
+
+           datetick('x','keeplimits')
+           drawnow limitrate
+       end
+
+       user_data = obj.UserData; 
+    end
+end
 
 % --- Executes on slider movement.
 function weightSide_Callback(hObject, eventdata, handles)
@@ -135,7 +184,7 @@ val = get(hObject,'Value');
 setappdata(0,'side_ratio',val);
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-
+end
 
 % --- Executes during object creation, after setting all properties.
 function weightSide_CreateFcn(hObject, eventdata, handles)
@@ -144,10 +193,10 @@ function weightSide_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
+    if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+        set(hObject,'BackgroundColor',[.9 .9 .9]);
+    end
 end
-
 
 % --- Executes on button press in btn_end_point.
 function btn_end_point_Callback(hObject, eventdata, handles)
@@ -157,6 +206,7 @@ function btn_end_point_Callback(hObject, eventdata, handles)
 [bending_end_point, rotation_end_point] = calibration;
 setappdata(0,'bending_end_point',bending_en*-d_point);
 setappdata(0,'rotation_end_point',rotation_end_point);
+end
 
 % --- Executes on button press in btn_start_point.
 function btn_start_point_Callback(hObject, eventdata, handles)
@@ -166,7 +216,7 @@ function btn_start_point_Callback(hObject, eventdata, handles)
 [bending_start_point, rotation_start_point] = calibration;
 setappdata(0,'bending_start_point',bending_start_point);
 setappdata(0,'rotation_start_point',rotation_start_point);
-
+end
 
 
   
@@ -187,10 +237,10 @@ function port_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 %a = get(handles.port,'string');
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+    if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+        set(hObject,'BackgroundColor','white');
+    end
 end
-
 
 % --- Executes on button press in btn_end_vicon.
 function btn_end_vicon_Callback(hObject, eventdata, handles)
@@ -201,7 +251,7 @@ global t;
 stop(t);
 % fclose(handles.fid);
 fclose(handles.s);
-
+end
 
 
 function port_Callback(hObject, eventdata, handles)
@@ -213,7 +263,7 @@ function port_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of port as a double
 handles.a = get(hObject,'string');
 guidata(hObject, handles);
-
+end
 
 % --- Executes on button press in refresh.
 function refresh_Callback(hObject, eventdata, handles)
@@ -232,20 +282,6 @@ buff = struct();
 % buf_data_1= zeros(buf_len, 1);
 % buf_data_filtered_1 = zeros(buf_len, 1);
 guidata(hObject, handles);
+end
 
-
-% --- Executes during object creation, after setting all properties.
-function btn_start_vicon_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to btn_start_vicon (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-
-% --- Executes during object creation, after setting all properties.
-function btn_end_vicon_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to btn_end_vicon (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-
-
+end
