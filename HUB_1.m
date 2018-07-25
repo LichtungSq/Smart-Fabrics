@@ -1,7 +1,4 @@
-function varargout = HUB(varargin)
-<<<<<<< HEAD
-% GUI program for communication with Flora
-=======
+function varargout = HUB_1(varargin)
 % HUB MATLAB code for HUB.fig
 %      HUB, by itself, creates a new HUB or raises the existing
 %      singleton*.
@@ -25,8 +22,7 @@ function varargout = HUB(varargin)
 
 % Edit the above text to modify the response to help HUB
 
-% Last Modified by GUIDE v2.5 25-Jul-2018 17:54:51
->>>>>>> master
+% Last Modified by GUIDE v2.5 23-Jul-2018 15:31:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -59,29 +55,14 @@ function HUB_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for HUB
 handles.output = hObject;
 
-% Turn off all warnings
-warning off all;
-
-% Initialize all params
-hasData = false; 	%表征串口是否接收到数据
-isShow = false;  	%表征是否正在进行数据显示，即是否正在执行函数dataDisp
-isStopDisp = false;  	%表征是否按下了【停止显示】按钮
-numRecv = 0;    	%接收字符计数
-strRecv = '';   		%已接收的字符串
-
-% Bind params to the hObject handler
-setappdata(hObject, 'hasData', hasData);
-setappdata(hObject, 'strRec', strRecv);
-setappdata(hObject, 'numRec', numRecv);
-setappdata(hObject, 'isShow', isShow);
-setappdata(hObject, 'isStopDisp', isStopDisp);
+setappdata(handles.btn_start_vicon,'vicon_plot',1);
 
 % Update handles structure
 guidata(hObject, handles);
 
 % UIWAIT makes HUB wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-end
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = HUB_OutputFcn(hObject, eventdata, handles) 
@@ -92,14 +73,6 @@ function varargout = HUB_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
-end
-
-% --- Executes during object creation, after setting all properties.
-function btn_start_vicon_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to btn_start_vicon (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-end
 
 % --- Executes on button press in btn_start_vicon.
 function btn_start_vicon_Callback(hObject, eventdata, handles)
@@ -120,51 +93,43 @@ rotation_end_point = getappdata(0,'rotation_end_point');
 axes(handles.s1);
 h_voltage_1 = animatedline('Color','r');
 handles.s1.YGrid = 'on';
-handles.s1.YLim = [0 256];
+handles.s1.YLim = [0 255];
 % access to the s2
 axes(handles.s2);
 h_voltage_2 = animatedline('Color','g');
 handles.s2.YGrid = 'on';
-handles.s2.YLim = [0 256];
+handles.s2.YLim = [0 255];
 % access to the s3
 axes(handles.s3);
 h_voltage_3 = animatedline('Color','b');
 handles.s3.YGrid = 'on';
-handles.s3.YLim = [0 256];
+handles.s3.YLim = [0 255];
 % access to the s4
 axes(handles.s4);
 h_voltage_4 = animatedline('Color','k');
 handles.s4.YGrid = 'on';
-handles.s4.YLim = [0 256];
+handles.s4.YLim = [0 255];
 
 startTime = datetime('now','Format','HH:mm:ss.SSSSSS');
 
 global t;
-<<<<<<< HEAD
-global buff;
-buff = struct();
-buff.buf_len = 25;
-buff.buf_data_1 = zeros(buff.buf_len, 1);
-buff.buf_data_filtered_1 = zeros(buff.buf_len, 1);
-t = timer('StartDelay', 0, 'Period', 0.01, 'ExecutionMode', 'fixedRate','UserData', ...
-    struct('len',25,'buf_1',zeros(25,1),'buf_filtered_1',zeros(25,1)));
-=======
 global buffer;
-buffer.buf_len = 25;
-buffer.buf_data = zeros(buffer.buf_len, 4);
-buffer.buf_data_filtered = zeros(buffer.buf_len, 4);
-t = timer('StartDelay', 0, 'Period', 0.025, 'ExecutionMode', 'fixedRate');
->>>>>>> master
+buffer.buf_len = 15;
+buffer.buf_data_1 = zeros(buffer.buf_len, 1);
+buffer.buf_data_filtered_1 = zeros(buffer.buf_len, 1);
+t = timer('StartDelay', 0, 'Period', 0.02, 'ExecutionMode', 'fixedRate');
 t.StartFcn = @(x,y)disp('Hello World!');
 t.StopFcn = @(x,y)disp('Hello World!');
-t.TimerFcn = @ReceiveCallback;
+t.TimerFcn = {@ReceiveCallback, handles.s, h_voltage_1, h_voltage_2, h_voltage_3, h_voltage_4, ...
+    handles.s1, handles.s2, handles.s3, handles.s4, startTime, handles.fid};
 start(t)
-guidata(hObject, handles);
 
-    function ReceiveCallback(~,~)         
+    function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4, startTime, fid)         
        flushinput(s)  
-          
-       buf_len = 11;
+       global buffer
+    %    /dev/cu.usbmodem1411
+    %    readasync(s)      
+    %    buf_len = 11;
     %    taps = 5;
     %    buf_len = get(gcbl, 'Userdata');
     %    buf_data_1 = get(gcbd, 'Userdata');
@@ -185,13 +150,13 @@ guidata(hObject, handles);
            fprintf(fid,'%s, %d\n\t', t, value_3);
            fprintf(fid,'%s, %d\n\t', t, value_4);       
 
-           buff.buf_data_1 = [buff.buf_data_1(2:end); value_1];
-           if buff.buf_data_1(1) ~= 0
-               buff.buf_data_filtered_1 = sgolayfilt(double(buff.buf_data_1),2,7);
+           buffer.buf_data_1 = [buffer.buf_data_1(2:end); value_1];
+           if buffer.buf_data_1(1) ~= 0
+               buffer.buf_data_filtered_1 = sgolayfilt(double(buffer.buf_data_1),1,11);
            end       
 
            % Add points to animation
-           addpoints(h1, diff*3600*24, buf_data_filtered_1(buf_len));
+           addpoints(h1, diff*3600*24, buffer.buf_data_filtered_1(buffer.buf_len));
            addpoints(h2, diff*3600*24, double(value_2));
            addpoints(h3, diff*3600*24, double(value_3));
            addpoints(h4, diff*3600*24, double(value_4));
@@ -204,9 +169,14 @@ guidata(hObject, handles);
            datetick('x','keeplimits')
            drawnow limitrate
        end
-
-       user_data = obj.UserData; 
+    %    data = struct('len',25,'buf_1',buf_data_1,'buf_filtered_1', buf_data_filtered_1);
+    %    obj.Userdata = data;
+    %    set(gcbl, 'Userdata', buf_len);
+    %    set(gcbd, 'Userdata', buf_data_1);
+    %    set(gcbf, 'Userdata', buf_data_filtered_1);   
     end
+
+guidata(hObject, handles);
 end
 
 % --- Executes on slider movement.
@@ -218,7 +188,7 @@ val = get(hObject,'Value');
 setappdata(0,'side_ratio',val);
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-end
+
 
 % --- Executes during object creation, after setting all properties.
 function weightSide_CreateFcn(hObject, eventdata, handles)
@@ -227,16 +197,10 @@ function weightSide_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: slider controls usually have a light gray background.
-    if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-        set(hObject,'BackgroundColor',[.9 .9 .9]);
-    end
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
-function btn_end_point_CreateFcn(hObject, eventdata, handles)
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-end
 
 % --- Executes on button press in btn_end_point.
 function btn_end_point_Callback(hObject, eventdata, handles)
@@ -246,7 +210,6 @@ function btn_end_point_Callback(hObject, eventdata, handles)
 [bending_end_point, rotation_end_point] = calibration;
 setappdata(0,'bending_end_point',bending_en*-d_point);
 setappdata(0,'rotation_end_point',rotation_end_point);
-end
 
 % --- Executes on button press in btn_start_point.
 function btn_start_point_Callback(hObject, eventdata, handles)
@@ -256,7 +219,7 @@ function btn_start_point_Callback(hObject, eventdata, handles)
 [bending_start_point, rotation_start_point] = calibration;
 setappdata(0,'bending_start_point',bending_start_point);
 setappdata(0,'rotation_start_point',rotation_start_point);
-end
+
 
 
   
@@ -277,18 +240,10 @@ function port_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 %a = get(handles.port,'string');
-    if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-        set(hObject,'BackgroundColor','white');
-    end
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
 end
 
-
-% --- Executes during object creation, after setting all properties.
-function btn_end_vicon_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to btn_end_vicon (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-end
 
 % --- Executes on button press in btn_end_vicon.
 function btn_end_vicon_Callback(hObject, eventdata, handles)
@@ -299,7 +254,7 @@ global t;
 stop(t);
 % fclose(handles.fid);
 fclose(handles.s);
-end
+
 
 
 function port_Callback(hObject, eventdata, handles)
@@ -311,26 +266,22 @@ function port_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of port as a double
 handles.a = get(hObject,'string');
 guidata(hObject, handles);
-end
 
-% --- Executes on button press in update.
-function update_Callback(hObject, eventdata, handles)
-% hObject    handle to update (see GCBO)
+
+% --- Executes on button press in refresh.
+function refresh_Callback(hObject, eventdata, handles)
+% hObject    handle to refresh (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 delete(instrfindall);
-handles.s = serial(handles.a); 
-set(handles.s,'BaudRate',9600);
+handles.s = serial(handles.a);        
+set(handles.s,'BaudRate',115200);
 warning off;
 
 global buffer
 buffer = struct();
 guidata(hObject, handles);
-end
 
-<<<<<<< HEAD
-end
-=======
 
 % --- Executes during object creation, after setting all properties.
 function btn_start_vicon_CreateFcn(hObject, eventdata, handles)
@@ -344,4 +295,6 @@ function btn_end_vicon_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to btn_end_vicon (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
->>>>>>> master
+
+
+
