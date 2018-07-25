@@ -115,8 +115,8 @@ startTime = datetime('now','Format','HH:mm:ss.SSSSSS');
 global t;
 global buff;
 buff.buf_len = 25;
-buff.buf_data_1 = zeros(buff.buf_len, 1);
-buff.buf_data_filtered_1 = zeros(buff.buf_len, 1);
+buff.buf_data_1 = zeros(buf_len, 1);
+buff.buf_data_filtered_1 = zeros(buf_len, 1);
 t = timer('StartDelay', 0, 'Period', 0.01, 'ExecutionMode', 'fixedRate','UserData', ...
     struct('len',25,'buf_1',zeros(25,1),'buf_filtered_1',zeros(25,1)));
 t.StartFcn = @(x,y)disp('Hello World!');
