@@ -113,12 +113,11 @@ handles.s4.YLim = [0 255];
 startTime = datetime('now','Format','HH:mm:ss.SSSSSS');
 
 global t;
-global buff;
-buff.buf_len = 25;
-buff.buf_data_1 = zeros(buff.buf_len, 1);
-buff.buf_data_filtered_1 = zeros(buff.buf_len, 1);
-t = timer('StartDelay', 0, 'Period', 0.01, 'ExecutionMode', 'fixedRate','UserData', ...
-    struct('len',25,'buf_1',zeros(25,1),'buf_filtered_1',zeros(25,1)));
+global buffer;
+buffer.buf_len = 15;
+buffer.buf_data_1 = zeros(buffer.buf_len, 1);
+buffer.buf_data_filtered_1 = zeros(buffer.buf_len, 1);
+t = timer('StartDelay', 0, 'Period', 0.02, 'ExecutionMode', 'fixedRate');
 t.StartFcn = @(x,y)disp('Hello World!');
 t.StopFcn = @(x,y)disp('Hello World!');
 t.TimerFcn = {@ReceiveCallback, handles.s, h_voltage_1, h_voltage_2, h_voltage_3, h_voltage_4, ...
@@ -223,14 +222,9 @@ function refresh_Callback(hObject, eventdata, handles)
 delete(instrfindall);
 handles.s = serial(handles.a);        
 set(handles.s,'BaudRate',115200);
-% set(gcbl, 'Userdata', 25);
-% set(gcbd, 'Userdata', zeros(25,1));
-% set(gcbf, 'Userdata', zeros(25,1));
-global buff
-buff = struct();
-% buf_len = 25;
-% buf_data_1= zeros(buf_len, 1);
-% buf_data_filtered_1 = zeros(buf_len, 1);
+
+global buffer
+buffer = struct();
 guidata(hObject, handles);
 
 

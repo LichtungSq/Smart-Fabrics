@@ -1,6 +1,6 @@
 function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4, startTime, fid)         
    flushinput(s)  
-   global buff
+   global buffer
 %    /dev/cu.usbmodem1411
 %    readasync(s)      
 %    buf_len = 11;
@@ -24,13 +24,13 @@ function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4, star
        fprintf(fid,'%s, %d\n\t', t, value_3);
        fprintf(fid,'%s, %d\n\t', t, value_4);       
        
-       buff.buf_data_1 = [buff.buf_data_1(2:end); value_1];
-       if buff.buf_data_1(1) ~= 0
-           buff.buf_data_filtered_1 = sgolayfilt(double(buff.buf_data_1),2,7);
+       buffer.buf_data_1 = [buffer.buf_data_1(2:end); value_1];
+       if buffer.buf_data_1(1) ~= 0
+           buffer.buf_data_filtered_1 = sgolayfilt(double(buffer.buf_data_1),3,7);
        end       
 
        % Add points to animation
-       addpoints(h1, diff*3600*24, buf_data_filtered_1(buf_len));
+       addpoints(h1, diff*3600*24, buffer.buf_data_filtered_1(buffer.buf_len));
        addpoints(h2, diff*3600*24, double(value_2));
        addpoints(h3, diff*3600*24, double(value_3));
        addpoints(h4, diff*3600*24, double(value_4));
@@ -43,8 +43,8 @@ function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4, star
        datetick('x','keeplimits')
        drawnow limitrate
    end
-   data = struct('len',25,'buf_1',buf_data_1,'buf_filtered_1', buf_data_filtered_1);
-   obj.Userdata = data;
+%    data = struct('len',25,'buf_1',buf_data_1,'buf_filtered_1', buf_data_filtered_1);
+%    obj.Userdata = data;
 %    set(gcbl, 'Userdata', buf_len);
 %    set(gcbd, 'Userdata', buf_data_1);
 %    set(gcbf, 'Userdata', buf_data_filtered_1);   
