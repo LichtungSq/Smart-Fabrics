@@ -4,7 +4,7 @@ function varargout = HUB(varargin)
 %      singleton*.
 %
 %      H = HUB returns the handle to a new HUB or the handle to
-%      the existing singleton*.
+%      the existing singleton*. siqisiqi
 %
 %      HUB('CALLBACK',hObject,eventData,handles,...) calls the local
 %      function named CALLBACK in HUB.M with the given input arguments.
