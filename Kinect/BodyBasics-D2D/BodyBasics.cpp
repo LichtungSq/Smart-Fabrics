@@ -15,6 +15,10 @@
 #include <strsafe.h>
 #include <iostream>
 #include <fstream>
+#include <cmath>
+
+using std::acos;
+using std::sqrt;
 
 using namespace std;
 
@@ -25,16 +29,8 @@ static const float c_HandSize = 30.0f;
 char str_output[1024];
 char filename_output[256];
 ofstream output_file;
-char name[20] = "test";
-char index[10] = "1";
-
-float upper_arm_X = 0.0;
-float upper_arm_Y = 0.0;
-float upper_arm_Z = 0.0;
-
-float lower_arm_X = 0.0;
-float lower_arm_Y = 0.0;
-float lower_arm_Z = 0.0;
+char name[20] = "siqiwang";
+char index[10] = "3";
 
 /// <summary>
 /// Entry point for the application
@@ -596,9 +592,9 @@ void CBodyBasics::DrawBody(const Joint* pJoints, const D2D1_POINT_2F* pJointPoin
 	sprintf(tmp_char, "%0.2f ", pJoints[JointType_WristRight].Position.Z);
 	strcat(str_output, tmp_char);
 
-	upper_arm_X = pJoints[JointType_ElbowRight].Position.X - pJoints[JointType_ShoulderRight].Position.X;
-	upper_arm_Y = pJoints[JointType_ElbowRight].Position.Y - pJoints[JointType_ShoulderRight].Position.Y;
-	upper_arm_Z = pJoints[JointType_ElbowRight].Position.Z - pJoints[JointType_ShoulderRight].Position.Z;
+	float upper_arm_X = pJoints[JointType_ShoulderRight].Position.X - pJoints[JointType_ElbowRight].Position.X;
+	float upper_arm_Y = pJoints[JointType_ShoulderRight].Position.Y - pJoints[JointType_ElbowRight].Position.Y;
+	float upper_arm_Z = pJoints[JointType_ShoulderRight].Position.Z - pJoints[JointType_ElbowRight].Position.Z;
 
 	sprintf(tmp_char, "%0.2f ", upper_arm_X);
 	strcat(str_output, tmp_char);
@@ -607,9 +603,9 @@ void CBodyBasics::DrawBody(const Joint* pJoints, const D2D1_POINT_2F* pJointPoin
 	sprintf(tmp_char, "%0.2f ", upper_arm_Z);
 	strcat(str_output, tmp_char);
 
-	lower_arm_X = pJoints[JointType_WristRight].Position.X - pJoints[JointType_ShoulderRight].Position.X;
-	lower_arm_Y = pJoints[JointType_WristRight].Position.Y - pJoints[JointType_ShoulderRight].Position.Y;
-	lower_arm_Z = pJoints[JointType_WristRight].Position.Z - pJoints[JointType_ShoulderRight].Position.Z;
+	float lower_arm_X = pJoints[JointType_WristRight].Position.X - pJoints[JointType_ElbowRight].Position.X;
+	float lower_arm_Y = pJoints[JointType_WristRight].Position.Y - pJoints[JointType_ElbowRight].Position.Y;
+	float lower_arm_Z = pJoints[JointType_WristRight].Position.Z - pJoints[JointType_ElbowRight].Position.Z;
 
 	sprintf(tmp_char, "%0.2f ", lower_arm_X);
 	strcat(str_output, tmp_char);
@@ -618,7 +614,21 @@ void CBodyBasics::DrawBody(const Joint* pJoints, const D2D1_POINT_2F* pJointPoin
 	sprintf(tmp_char, "%0.2f ", lower_arm_Z);
 	strcat(str_output, tmp_char);
 
+	float product_arm = (upper_arm_X * lower_arm_X) + (upper_arm_Y * lower_arm_Y) + (upper_arm_Z * lower_arm_Z);
+	float mod_lower = sqrt(lower_arm_X * lower_arm_X + lower_arm_Y * lower_arm_Y + lower_arm_Z * lower_arm_Z);
+	float mod_upper = sqrt(upper_arm_X * upper_arm_X + upper_arm_Y * upper_arm_Y + upper_arm_Z * upper_arm_Z);
 
+	float cos_val = product_arm / (mod_lower * mod_upper);
+
+	if (cos_val < -1 && cos_val > -2)
+		cos_val = -1;
+	else if (cos_val > 1 && cos_val < 2)
+		cos_val = 1;
+
+	double angle = acos(cos_val) * 180 / 3.14159;
+
+	sprintf(tmp_char, "%0.2f ", 180 - angle);
+	strcat(str_output, tmp_char);
 
 	/*sprintf(tmp_char, "%0.2f ", pJoints[JointType_WristLeft].Position.X);
 	strcat(str_output, tmp_char);
