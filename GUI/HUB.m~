@@ -22,7 +22,7 @@ function varargout = HUB(varargin)
 
 % Edit the above text to modify the response to help HUB
 
-% Last Modified by GUIDE v2.5 26-Jul-2018 11:45:56
+% Last Modified by GUIDE v2.5 25-Jul-2018 22:17:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -83,14 +83,10 @@ function btn_start_vicon_Callback(hObject, eventdata, handles)
 fopen(handles.s);
 handles.fid = fopen('Data_k.txt','a+');
 
-v1_start_point = getappdata(0,'v1_start_point');
-v1_end_point = getappdata(0,'v1_end_point');
-v2_start_point = getappdata(0,'v2_start_point');
-v2_end_point = getappdata(0,'v2_end_point');
-p_start_point = getappdata(0,'p_start_point');
-p_end_point = getappdata(0,'p_end_point');
-h_start_point = getappdata(0,'h_start_point');
-h_end_point = getappdata(0,'h_end_point');
+bending_start_point = getappdata(0,'bending_start_point');
+bending_end_point = getappdata(0,'bending_end_point');
+rotation_start_point = getappdata(0,'rotation_start_point');
+rotation_end_point = getappdata(0,'rotation_end_point');
 % hybridDataPlot(bending_start_point, bending_end_point, rotation_start_point, rotation_end_point, handles);
 
 % access to the s1
@@ -157,24 +153,21 @@ function btn_end_point_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_end_point (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-fopen(handles.s);
 [v1_end_point, v2_end_point, p_end_point, h_end_point] = calibration(handles.s);
 setappdata(0,'v1_end_point',v1_end_point);
 setappdata(0,'v2_end_point',v2_end_point);
 setappdata(0,'p_end_point',p_end_point);
 setappdata(0,'h_end_point',h_end_point);
 set(handles.V1_end, 'String', num2str(v1_end_point));
-set(handles.V2_end, 'String', num2str(v2_end_point));
-set(handles.p_end, 'String', num2str(p_end_point));
-set(handles.h_end, 'String', num2str(h_end_point));
+set(handles.V2_st, 'String', num2str(v2_end_point));
+set(handles.p_start, 'String', num2str(p_end_point));
+set(handles.h_start, 'String', num2str(h_end_point));
 
 % --- Executes on button press in btn_start_point.
 function btn_start_point_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_start_point (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-fopen(handles.s);
-% handles.fid_1 = fopen('Data_1.txt','a+');
 [v1_start_point, v2_start_point, p_start_point, h_start_point] = calibration(handles.s);
 setappdata(0,'v1_start_point',v1_start_point);
 setappdata(0,'v2_start_point',v2_start_point);
@@ -313,112 +306,3 @@ set(handles.V1_start, 'String', '0');
 set(handles.V2_start, 'String', '0');
 set(handles.p_start, 'String', '0');
 set(handles.h_start, 'String', '0');
-set(handles.V1_end, 'String', '0');
-set(handles.V2_end, 'String', '0');
-set(handles.p_end, 'String', '0');
-set(handles.h_end, 'String', '0');
-
-
-% --- Executes during object creation, after setting all properties.
-function V1_start_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to V1_start (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-function V1_end_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to h_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-function V2_start_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to h_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% --- Executes during object creation, after setting all properties.
-function V2_end_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to V2_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-
-% --- Executes during object creation, after setting all properties.
-function p_start_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to p_start (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-
-% --- Executes during object creation, after setting all properties.
-function p_end_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to p_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-
-% --- Executes during object creation, after setting all properties.
-function h_start_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to h_start (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-
-% --- Executes during object creation, after setting all properties.
-function h_end_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to h_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% --- Executes during object deletion, before destroying properties.
-function V1_start_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to V1_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% --- Executes during object deletion, before destroying properties.
-function V1_end_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to V1_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes during object deletion, before destroying properties.
-function V2_start_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to V2_start (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes during object deletion, before destroying properties.
-function V2_end_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to V2_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes during object deletion, before destroying properties.
-function p_start_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to p_start (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes during object deletion, before destroying properties.
-function p_end_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to p_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes during object deletion, before destroying properties.
-function h_start_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to h_start (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes during object deletion, before destroying properties.
-function h_end_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to h_end (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
