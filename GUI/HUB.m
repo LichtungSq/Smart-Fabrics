@@ -81,7 +81,10 @@ function btn_start_vicon_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % toggle(handles.btn_start_vicon,'vicon_plot');
 fopen(handles.s);
-handles.fid = fopen('Data_k.txt','a+');
+handles.fid_v1 = fopen('Data_1.txt','a+');
+handles.fid_v2 = fopen('Data_2.txt','a+');
+handles.fid_p = fopen('Data_3.txt','a+');
+handles.fid_h = fopen('Data_4.txt','a+');
 
 v1_start_point = getappdata(0,'v1_start_point');
 v1_end_point = getappdata(0,'v1_end_point');
@@ -97,22 +100,22 @@ h_end_point = getappdata(0,'h_end_point');
 axes(handles.s1);
 h_voltage_1 = animatedline('Color','r');
 handles.s1.YGrid = 'on';
-handles.s1.YLim = [0 256];
+handles.s1.YLim = [0 200];
 % access to the s2
 axes(handles.s2);
 h_voltage_2 = animatedline('Color','g');
 handles.s2.YGrid = 'on';
-handles.s2.YLim = [0 256];
+handles.s2.YLim = [0 200];
 % access to the s3
 axes(handles.s3);
 h_voltage_3 = animatedline('Color','b');
 handles.s3.YGrid = 'on';
-handles.s3.YLim = [0 256];
+handles.s3.YLim = [0 200];
 % access to the s4
 axes(handles.s4);
 h_voltage_4 = animatedline('Color','k');
 handles.s4.YGrid = 'on';
-handles.s4.YLim = [0 256];
+handles.s4.YLim = [0 200];
 
 startTime = datetime('now','Format','HH:mm:ss.SSSSSS');
 
@@ -125,7 +128,8 @@ t = timer('StartDelay', 0, 'Period', 0.025, 'ExecutionMode', 'fixedRate');
 t.StartFcn = @(x,y)disp('Hello World!');
 t.StopFcn = @(x,y)disp('Hello World!');
 t.TimerFcn = {@ReceiveCallback, handles.s, h_voltage_1, h_voltage_2, h_voltage_3, h_voltage_4, ...
-    handles.s1, handles.s2, handles.s3, handles.s4, startTime, handles.fid};
+    handles.s1, handles.s2, handles.s3, handles.s4, v1_start_point, v2_start_point, p_start_point,...
+    h_start_point, startTime, handles.fid_v1, handles.fid_v2, handles.fid_p, handles.fid_h};
 start(t)
 guidata(hObject, handles);
 
@@ -215,7 +219,10 @@ function btn_end_vicon_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global t;
 stop(t);
-% fclose(handles.fid);
+fclose(handles.fid_v1);
+fclose(handles.fid_v2);
+fclose(handles.fid_p);
+fclose(handles.fid_h);
 fclose(handles.s);
 
 
@@ -227,7 +234,7 @@ function port_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of port as text
 %        str2double(get(hObject,'String')) returns contents of port as a double
-handles.a = get(hObject,'string');
+handles.a = get(hObject,'String');
 guidata(hObject, handles);
 
 
@@ -309,14 +316,14 @@ function reset_Callback(hObject, eventdata, handles)
 % hObject    handle to reset (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.V1_start, 'String', '0');
-set(handles.V2_start, 'String', '0');
-set(handles.p_start, 'String', '0');
-set(handles.h_start, 'String', '0');
-set(handles.V1_end, 'String', '0');
-set(handles.V2_end, 'String', '0');
-set(handles.p_end, 'String', '0');
-set(handles.h_end, 'String', '0');
+set(handles.V1_start, 'String', '');
+set(handles.V2_start, 'String', '');
+set(handles.p_start, 'String', '');
+set(handles.h_start, 'String', '');
+set(handles.V1_end, 'String', '');
+set(handles.V2_end, 'String', '');
+set(handles.p_end, 'String', '');
+set(handles.h_end, 'String', '');
 
 
 % --- Executes during object creation, after setting all properties.

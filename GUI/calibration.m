@@ -11,7 +11,7 @@ function [calibrated_v1, calibrated_v2, calibrated_p, calibrated_h] = calibratio
     waitbarH = waitbar(0, 'Sampling the data...', 'Name', 'Calibration');
 
     N = 100;
-    taps = 20;
+    taps = 40;
     buf_len = 50;
 
     buf_data = zeros(buf_len, 4);
@@ -34,7 +34,7 @@ function [calibrated_v1, calibrated_v2, calibrated_p, calibrated_h] = calibratio
         buf_data(:,2) = [buf_data(2:end,2); value_2];
         buf_data(:,3) = [buf_data(2:end,3); value_3];
         buf_data(:,4) = [buf_data(2:end,4); value_4];
-        buf_data_filtered = mean(buf_data(buf_len : -1 : buf_len-taps+1,:));
+        buf_data_filtered = mean(buf_data(taps : -1 : 1,:));
 
         waitbar(k/N, waitbarH); 
     end

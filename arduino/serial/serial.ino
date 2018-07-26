@@ -1,7 +1,7 @@
 
 const int analogInPin_1 = A11;  // Analog input pin that the potentiometer is attached to
-const int analogInPin_2 = A7;
-const int analogInPin_3 = A9;
+const int analogInPin_2 = A9;
+const int analogInPin_3 = A7;
 const int analogInPin_4 = A10;
 
 int sensorValue_1 = 0;        // value read from the pot
@@ -42,19 +42,20 @@ void loop() {
 	// map it to the range of the analog out:
 	outputValue_4 = map(sensorValue_4, 0, 1023, 0, 255);
 
-	// print the results to the Serial Monitor:
-	Serial.print(outputValue_1);
-	Serial.println("a");
-  Serial.flush();
-	Serial.print(outputValue_2);
-	Serial.println("b");
-  Serial.flush();
-	Serial.print(outputValue_3);
-	Serial.println("c");
-  Serial.flush();
-	Serial.print(outputValue_4);
-	Serial.println("d");
-	Serial.flush();
+//	// print the results to the Serial Monitor:
+
+  Serial.print(outputValue_1);
+  Serial.println("a");
+
+  Serial.print(outputValue_2);
+  Serial.println("b");
+
+  Serial.print(outputValue_3);
+  Serial.println("c");
+
+  Serial.print(outputValue_4);
+  Serial.println("d");
+
 
   // int a = analogRead(A11);
   // char buffer_tmp[2];
