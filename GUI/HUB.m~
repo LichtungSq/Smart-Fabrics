@@ -96,11 +96,7 @@ h_start_point = getappdata(0,'h_start_point');
 h_end_point = getappdata(0,'h_end_point');
 % hybridDataPlot(bending_start_point, bending_end_point, rotation_start_point, rotation_end_point, handles);
 
-% clear the plots
-cla(handles.s1);
-cla(handles.s2);
-cla(handles.s3);
-cla(handles.s4);
+
 
 % access to the s1
 axes(handles.s1);
