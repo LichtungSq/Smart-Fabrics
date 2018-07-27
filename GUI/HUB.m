@@ -4,7 +4,7 @@ function varargout = HUB(varargin)
 %      singleton*.
 %
 %      H = HUB returns the handle to a new HUB or the handle to
-%      the existing singleton*. siqisiqi
+%      the existing singleton*.
 %
 %      HUB('CALLBACK',hObject,eventData,handles,...) calls the local
 %      function named CALLBACK in HUB.M with the given input arguments.
@@ -445,7 +445,6 @@ function h_end_DeleteFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
-
 function name_Callback(hObject, eventdata, handles)
 % hObject    handle to name (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -453,6 +452,8 @@ function name_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of name as text
 %        str2double(get(hObject,'String')) returns contents of name as a double
+handles.name = get(hObject,'String');
+guidata(hObject, handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -473,6 +474,8 @@ function update_name_Callback(hObject, eventdata, handles)
 % hObject    handle to update_name (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.update_name = handles.name;
+guidata(hObject, handles);
 
 
 % --- Executes on button press in separator.
