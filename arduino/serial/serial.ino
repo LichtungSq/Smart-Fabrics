@@ -1,3 +1,4 @@
+#include <microsmooth.h>
 
 const int analogInPin_1 = A11;  // Analog input pin that the potentiometer is attached to
 const int analogInPin_2 = A7;
@@ -16,45 +17,49 @@ int outputValue_3 = 0;        // value output to the PWM (analog out)
 int sensorValue_4 = 0;        // value read from the pot
 int outputValue_4 = 0;        // value output to the PWM (analog out)
 
+uint16_t *ptr;
+
 void setup() {
 	// initialize serial communications at 9600 bps:
 	Serial.begin(9600);
+  ptr = ms_init(EMA);
+  if (ptr == NULL) Serial.println("No memory");
 }
 
 void loop() {
 	// read the analog in value:
-	sensorValue_1 = analogRead(analogInPin_1);
+	sensorValue_1 = ema_filter(analogRead(analogInPin_1), ptr);
 	// map it to the range of the analog out:
 	outputValue_1 = map(sensorValue_1, 0, 1023, 0, 255);
 
 	// read the analog in value:
-	sensorValue_2 = analogRead(analogInPin_2);
+	sensorValue_2 = ema_filter(analogRead(analogInPin_2), ptr);
 	// map it to the range of the analog out:
 	outputValue_2 = map(sensorValue_2, 0, 1023, 0, 255);
 
 	// read the analog in value:
-	sensorValue_3 = analogRead(analogInPin_3);
+	sensorValue_3 = ema_filter(analogRead(analogInPin_3), ptr);
 	// map it to the range of the analog out:
 	outputValue_3 = map(sensorValue_3, 0, 1023, 0, 255);
 
 	// read the analog in value:
-	sensorValue_4 = analogRead(analogInPin_4);
+	sensorValue_4 = ema_filter(analogRead(analogInPin_4), ptr);
 	// map it to the range of the analog out:
 	outputValue_4 = map(sensorValue_4, 0, 1023, 0, 255);
 
 	// print the results to the Serial Monitor:
-	Serial.print(outputValue_1);
-	Serial.println("a");
-  Serial.flush();
-	Serial.print(outputValue_2);
-	Serial.println("b");
-  Serial.flush();
-	Serial.print(outputValue_3);
-	Serial.println("c");
-  Serial.flush();
-	Serial.print(outputValue_4);
-	Serial.println("d");
-	Serial.flush();
+	Serial.println(outputValue_1);
+//	Serial.println("a");
+//  Serial.flush();
+//	Serial.print(outputValue_2);
+//	Serial.println("b");
+//  Serial.flush();
+//	Serial.print(outputValue_3);
+//	Serial.println("c");
+//  Serial.flush();
+//	Serial.print(outputValue_4);
+//	Serial.println("d");
+//	Serial.flush();
 
   // int a = analogRead(A11);
   // char buffer_tmp[2];
