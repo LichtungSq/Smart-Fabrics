@@ -81,10 +81,10 @@ function btn_start_vicon_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % toggle(handles.btn_start_vicon,'vicon_plot');
 fopen(handles.s);
-handles.fid_v1 = fopen('Data_1.txt','a+');
-handles.fid_v2 = fopen('Data_2.txt','a+');
-handles.fid_p = fopen('Data_3.txt','a+');
-handles.fid_h = fopen('Data_4.txt','a+');
+handles.fid_v1 = fopen([handles.updated_name '_1.txt'],'a+');
+handles.fid_v2 = fopen([handles.updated_name '_2.txt'],'a+');
+handles.fid_p = fopen([handles.updated_name '_3.txt'],'a+');
+handles.fid_h = fopen([handles.updated_name '_4.txt'],'a+');
 
 v1_start_point = getappdata(0,'v1_start_point');
 v1_end_point = getappdata(0,'v1_end_point');
@@ -474,7 +474,7 @@ function update_name_Callback(hObject, eventdata, handles)
 % hObject    handle to update_name (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.update_name = handles.name;
+handles.updated_name = handles.name;
 guidata(hObject, handles);
 
 
@@ -483,19 +483,19 @@ function separator_Callback(hObject, eventdata, handles)
 % hObject    handle to separator (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-fid_v1 = fopen('Data_1.txt','a+');
+fid_v1 = fopen([handles.updated_name '_1.txt'],'a+');
 fprintf(fid_v1,'##################\n');
 fclose(fid_v1);
 
-fid_v2 = fopen('Data_2.txt','a+');
+fid_v2 = fopen([handles.updated_name '_2.txt'],'a+');
 fprintf(fid_v2,'##################\n');
 fclose(fid_v2);
 
-fid_p = fopen('Data_3.txt','a+');
+fid_p = fopen([handles.updated_name '_3.txt'],'a+');
 fprintf(fid_p,'##################\n');
 fclose(fid_p);
 
-fid_h = fopen('Data_4.txt','a+');
+fid_h = fopen([handles.updated_name '_4.txt'],'a+');
 fprintf(fid_h,'##################\n');
 fclose(fid_h);
 guidata(hObject, handles);
