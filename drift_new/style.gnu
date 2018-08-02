@@ -25,7 +25,10 @@ set style line 17 lt 4 lc "#4878CF" pt 13 lw 4 dt 3
 set style line 18 lt 4 lc "#4878CF" pt 13 lw 4 dt 2
 
 set style line 19 lt 4 lc rgb "red" pt 13 lw 6 dt 3
-set style line 20 lt 4 lc rgb "green" pt 13 lw 6 dt 3 
+set style line 20 lt 4 lc rgb "green" pt 13 lw 6 dt 3
+set style line 21 lt 4 lc rgb "red" pt 13 lw 4 dt 3
+set style line 22 lt 4 lc rgb "green" pt 13 lw 4 dt 3
+set style line 23 lt 4 lc "#4878CF" pt 13 lw 1 
 
 #set autoscale
 
