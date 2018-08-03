@@ -1,4 +1,3 @@
-#include <microsmooth.h>
 
 const int analogInPin_1 = A11;  // Analog input pin that the potentiometer is attached to
 const int analogInPin_2 = A9;
@@ -75,8 +74,6 @@ void loop() {
 
   Serial.print(outputValue_4);
   Serial.println("d");
-
->>>>>>> 085e51d6432accd60e929065d86aa61646acb654
 
   // int a = analogRead(A11);
   // char buffer_tmp[2];

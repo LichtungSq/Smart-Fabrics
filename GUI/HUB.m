@@ -105,30 +105,33 @@ cla(handles.s4);
 % access to the s1
 axes(handles.s1);
 h_voltage_1 = animatedline('Color','r');
-% clearpoints(h_voltage_1);
 handles.s1.YGrid = 'on';
-handles.s1.YLim = [0 100];
+handles.s1.YLim = [0 500];
 % access to the s2
 axes(handles.s2);
 h_voltage_2 = animatedline('Color','g');
 handles.s2.YGrid = 'on';
-handles.s2.YLim = [0 100];
+handles.s2.YLim = [0 500];
 % access to the s3
 axes(handles.s3);
 h_voltage_3 = animatedline('Color','b');
 handles.s3.YGrid = 'on';
-handles.s3.YLim = [0 100];
+handles.s3.YLim = [0 200];
 % access to the s4
 axes(handles.s4);
 h_voltage_4 = animatedline('Color','k');
 handles.s4.YGrid = 'on';
-handles.s4.YLim = [0 100];
+handles.s4.YLim = [0 200];
 
 startTime = datetime('now','Format','HH:mm:ss.SSSSSS');
 
+% global flag;
+% flag = 0;
+% set(handles.flag, 'String', num2str(flag));
+
 global t;
 global buffer;
-buffer.buf_len = 25;
+buffer.buf_len = 20;
 buffer.buf_data = zeros(buffer.buf_len, 4);
 buffer.buf_data_filtered = zeros(buffer.buf_len, 4);
 t = timer('StartDelay', 0, 'Period', 0.025, 'ExecutionMode', 'fixedRate');
