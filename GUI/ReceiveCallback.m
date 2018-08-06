@@ -28,11 +28,12 @@ function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4,...
        else
            value_2 = 0; 
        end
-       if value_3 < p_start_point
-           value_3 = 100*(1-(255-p_start_point)*value_3/p_start_point/(255-value_3));
-       else
-           value_3 = 0;
-       end
+%        if value_3 < p_start_point
+%             value_3 = p_start_point - value_3;
+%             value_3 = 100*(1-(255-p_start_point)*value_3/p_start_point/(255-value_3));
+%        else
+%            value_3 = 0;
+%        end
        if value_4 > h_start_point
            value_4 = 100*((255-h_start_point)*value_4/h_start_point/(255-value_4)-1);
        else

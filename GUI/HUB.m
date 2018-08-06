@@ -116,7 +116,7 @@ handles.s2.YLim = [0 500];
 axes(handles.s3);
 h_voltage_3 = animatedline('Color','b');
 handles.s3.YGrid = 'on';
-handles.s3.YLim = [0 200];
+handles.s3.YLim = [0 255];
 % access to the s4
 axes(handles.s4);
 h_voltage_4 = animatedline('Color','k');
