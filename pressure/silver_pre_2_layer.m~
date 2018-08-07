@@ -1,0 +1,6 @@
+% 847 369 404 721
+data_2 = xlsread('silver_pre_2_layer_per.xlsx',1,'B2:B404')-0.082276;
+data_1 = xlsread('silver_pre_2_layer_per.xlsx',1,'A2:A404')-5.9727;
+sgf = sgolayfilt(data_2,1,7);
+matrix = [data_1 sgf];
+xlswrite('silver_pre_2_layer_sg.csv',matrix,'Sheet1');
