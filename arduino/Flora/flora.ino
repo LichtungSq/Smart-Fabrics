@@ -42,23 +42,23 @@ void loop() {
 //   map it to the range of the analog out:
   outputValue_4 = map(sensorValue_4, 0, 1023, 0, 255);
 
-Serial.print(255);
-Serial.print(' ');
-Serial.print(0);
-Serial.print(' ');
+//Serial.print(255);
+//Serial.print(' ');
+//Serial.print(0);
+//Serial.print(' ');
 
 //   print the results to the Serial Monitor:
-//  	Serial.print(outputValue_1);
-//  	Serial.println("a");
+ 	  Serial.print(outputValue_1);
+  	Serial.println("a");
 //    Serial.flush();
-//  	Serial.print(outputValue_2);
-//  	Serial.println("b");
+  	Serial.print(outputValue_2);
+  	Serial.println("b");
 //    Serial.flush();
-//   Serial.println(outputValue_3);
-//   Serial.println("c");
+   Serial.print(outputValue_3);
+   Serial.println("c");
 //   Serial.flush();
-  	Serial.println(outputValue_4);
-//  	Serial.println("d");
+   Serial.print(outputValue_4);
+ 	 Serial.println("d");
 //  	Serial.flush();
 
   // Serial.print(outputValue_2);

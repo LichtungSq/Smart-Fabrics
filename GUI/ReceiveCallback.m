@@ -64,20 +64,20 @@ function ReceiveCallback(obj, event, s, h1, h2, h3, h4, ax1, ax2, ax3, ax4,...
        
        buffer.buf_data_filtered(buffer.buf_data_filtered > 200) = 200;
        
-       X = (1:1:buffer.buf_len); 
-       flag = 0;
-       [r,k,b] = regression(X, buffer.buf_data(:,3)');
-       
-       if k > 2 & (buffer.buf_data_filtered(end,3) > 40)
-           flag = 1;
-       end
-       if  k < -2 & (buffer.buf_data_filtered(1,3) > 40)
-           flag = 2;
-       end
-       if abs(k) < 1
-           flag = 0;
-       end
-       disp(flag);
+%        X = (1:1:buffer.buf_len); 
+%        flag = 0;
+%        [r,k,b] = regression(X, buffer.buf_data(:,3)');
+%        
+%        if k > 2 & (buffer.buf_data_filtered(end,3) > 40)
+%            flag = 1;
+%        end
+%        if  k < -2 & (buffer.buf_data_filtered(1,3) > 40)
+%            flag = 2;
+%        end
+%        if abs(k) < 1
+%            flag = 0;
+%        end
+%        disp(flag);
   
 %        Add points to animation
        addpoints(h1, diff*3600*24, buffer.buf_data_filtered(buffer.buf_len,1));

@@ -1,10 +1,13 @@
 delete(instrfindall);
-s = serial('/dev/cu.usbmodem1411');        
+s = serial('COM4');        
 set(s,'BaudRate',115200);    
 
 fopen(s);
 
-fid = fopen('Data_k.txt','a+');
+fid_v1 = fopen('new_strain_1.txt','a+');
+fid_v2 = fopen('new_strain_2.txt','a+');
+fid_p = fopen('new_pressure.txt','a+');
+fid_h = fopen('new_strain_3.txt','a+');
 
 figure(1)
 h_voltage_1 = animatedline;
@@ -22,7 +25,20 @@ buff_data_filtered_per = zeros(buf_len, 1);
 t =  timer('StartDelay', 0, 'Period', 0.01, 'ExecutionMode', 'fixedRate');
 t.StartFcn = @(x,y)disp('Hello World!');
 t.StopFcn = @(x,y)disp('Hello World!');
-t.TimerFcn = {@ReceiveCallback, s, h_voltage_1, ax, startTime, fid};
-start(t)
+t.TimerFcn = {@siqi_callback, s, h_voltage_1, ax, startTime, fid_v1, fid_v2, fid_p, fid_h};
 
-fclose(fid);
+% A dialog to stop the loop
+MessageBox = msgbox( 'Stop DataStream Client', 'Test data save' );
+
+start(t);
+
+while ~ishandle( MessageBox )
+   stop(t);
+   fclose(fid_v1);
+   fclose(fid_v2);
+   fclose(fid_p);
+   fclose(fid_h);
+   fclose(s);
+   delete(instrfindall);
+end
+
