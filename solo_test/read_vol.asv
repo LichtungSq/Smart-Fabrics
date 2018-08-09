@@ -4,7 +4,7 @@ a=arduino;
 
 %% Read the analog input from Arduino
 % 
-res_rest = 40;
+res_rest = 170;
 
 v_1 = readVoltage(a, 'A0');
 res_origin = res_rest / (5 / v_1 - 1);
@@ -31,7 +31,7 @@ cx.YLim = [0 3];
 % dx.YGrid = 'on';
 % dx.YLim = [0 1];
 
-res_rest = 40;
+res_rest = 270;
 
 v_1 = readVoltage(a, 'A0');
 res_origin = res_rest / (5 / v_1 - 1);
@@ -103,18 +103,18 @@ end
 
 timeSecs = (timeLogs-timeLogs(1))*24*3600;
 
-% smoothedVol_1 = smooth(volLogs_1, 25);
-% smoothedVol_2 = smooth(volLogs_1, 15);
-% smoothedVol_3 = smooth(volLogs_1, 5);
+smoothedVol_1 = smooth(volLogs_1, 25);
+smoothedVol_2 = smooth(volLogs_1, 15);
+smoothedVol_3 = smooth(volLogs_1, 5);
 
 figure(1)
 plot(timeSecs,volLogs_1)
-% hold on
-% plot(timeSecs,smoothedVol_1, 'r')
-% hold on
-% plot(timeSecs,smoothedVol_2, 'g')
-% hold on
-% plot(timeSecs,smoothedVol_3, 'b')
+hold on
+plot(timeSecs,smoothedVol_1, 'r')
+hold on
+plot(timeSecs,smoothedVol_2, 'g')
+hold on
+plot(timeSecs,smoothedVol_3, 'b')
 xlabel('Elapsed time (sec)')
 ylabel('Voltage (V)')
 
@@ -131,7 +131,7 @@ ylabel('R/R_origin (%)')
 %% Save to file
 
 T = table(timeSecs', volLogs_1','VariableNames',{'Time','Voltage_0'});
-filename_1 = 'test_day_hor_strain_low_vol.xlsx';
+filename_1 = 'LPF_previous_direc_10times_blue_15_3_20_20_20_stop5_spe10_vol.xlsx';
 % Write table to file 
 writetable(T,filename_1)
 % Print confirmation to command line
@@ -139,7 +139,7 @@ fprintf('Results table with %g voltage measurements saved to file %s\n',...
     length(timeSecs), filename_1)
 
 T = table(timeSecs', resLogs_percent','VariableNames',{'Time','Res_percent'});
-filename_4 = 'test_day_hor_strain_low_per.xlsx';
+filename_4 = 'LPF_previous_direc_10times_blue_15_3_20_20_20_stop5_spe10_pre.xlsx';
 % Write table to file 
 writetable(T,filename_4)
 % Print confirmation to command line

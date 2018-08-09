@@ -28,8 +28,8 @@ static const float c_HandSize = 30.0f;
 char str_output[1024];
 char filename_output[256];
 ofstream output_file;
-char name[20] = "ruibo";
-char index[10] = "2";
+char name[20] = "hor_strain_low";
+char index[10] = "1";
 
 float upper_arm_X = 0.0;
 float upper_arm_Y = 0.0;
