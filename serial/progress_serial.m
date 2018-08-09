@@ -4,10 +4,10 @@ set(s,'BaudRate',115200);
 
 fopen(s);
 
-fid_v1 = fopen('new_strain_1.txt','a+');
-fid_v2 = fopen('new_strain_2.txt','a+');
-fid_p = fopen('new_pressure.txt','a+');
-fid_h = fopen('new_strain_3.txt','a+');
+fid_v1 = fopen('./data_with_kinect_1/new_strain_1.txt','a+');
+fid_v2 = fopen('./data_with_kinect_1/new_strain_2.txt','a+');
+fid_p = fopen('./data_with_kinect_1/new_pressure.txt','a+');
+fid_h = fopen('./data_with_kinect_1/new_strain_3.txt','a+');
 
 figure(1)
 h_voltage_1 = animatedline;

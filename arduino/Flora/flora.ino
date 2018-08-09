@@ -21,11 +21,26 @@ void setup() {
   Serial.begin(115200);
 }
 
+int smooth(int data, float filterVal, float smoothedVal){
+
+
+  if (filterVal > 1){      // check to make sure param's are within range
+    filterVal = .99;
+  }
+  else if (filterVal <= 0){
+    filterVal = 0;
+  }
+
+  smoothedVal = (data * (1 - filterVal)) + (smoothedVal  *  filterVal);
+
+  return (int)smoothedVal;
+}
+
 void loop() {
   // read the analog in value:
-  	sensorValue_1 = analogRead(analogInPin_1);
+    sensorValue_1 = smooth(analogRead(analogInPin_1), 0.3, sensorValue_1);
 //   map it to the range of the analog out:
-  outputValue_1 = map(sensorValue_1, 0, 1023, 0, 255);
+ outputValue_1 = map(sensorValue_1, 0, 1023, 0, 255);
 
   // read the analog in value:
   sensorValue_2 = analogRead(analogInPin_2);
@@ -35,12 +50,12 @@ void loop() {
   // read the analog in value:
   sensorValue_3 = analogRead(analogInPin_3);
   // map it to the range of the analog out:
-  outputValue_3 = map(sensorValue_3, 0, 1023, 0, 255);
+ outputValue_3 = map(sensorValue_3, 0, 1023, 0, 255);
 
   // read the analog in value:
   sensorValue_4 = analogRead(analogInPin_4);
 //   map it to the range of the analog out:
-  outputValue_4 = map(sensorValue_4, 0, 1023, 0, 255);
+ outputValue_4 = map(sensorValue_4, 0, 1023, 0, 255);
 
 //Serial.print(255);
 //Serial.print(' ');
@@ -48,6 +63,7 @@ void loop() {
 //Serial.print(' ');
 
 //   print the results to the Serial Monitor:
+
  	  Serial.print(outputValue_1);
   	Serial.println("a");
 //    Serial.flush();
@@ -59,7 +75,7 @@ void loop() {
 //   Serial.flush();
    Serial.print(outputValue_4);
  	 Serial.println("d");
-//  	Serial.flush();
+  	Serial.flush();
 
   // Serial.print(outputValue_2);
   // Serial.println(" s2");
