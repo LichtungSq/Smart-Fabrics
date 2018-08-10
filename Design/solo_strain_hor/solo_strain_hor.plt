@@ -20,9 +20,9 @@ set ytics 0.05
 set y2range [0:180]
 set y2tics 30
 
-
-set xlabel "Time(sec)" offset 0,0.2
+set xlabel "Time (sec)" offset 0,0.2
 set ylabel "R Change Ratio" offset 1,0
+set y2label "Angle (degree)" offset 1,0
 
 plot "test_day_hor_strain_mid_per.csv" using 1:2 title "Strain Sensor" w l ls 10, \
 "output_hor_strain_mid_1.csv" using 1:2 axis x1y2 title "Kinect" w l ls 19, \
