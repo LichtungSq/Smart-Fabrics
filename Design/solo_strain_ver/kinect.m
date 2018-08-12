@@ -6,5 +6,5 @@ data = kinect_tmp(:,end);
 loess = smooth(data,15,'loess',2);
 % plot(t,loess);
 
-matrix = [t loess];
+matrix = [t-3.3 loess];
 xlswrite('output_ver_strain_right.csv',matrix,'Sheet1');
