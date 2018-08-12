@@ -1,4 +1,4 @@
-kinect_data = load("output_ruibo_1.txt");
+kinect_data = load("output_luckyday_3.txt");
 
 time = kinect_data(:,1);
 angle = kinect_data(:,end);
