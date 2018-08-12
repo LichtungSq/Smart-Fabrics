@@ -12,7 +12,7 @@ set key spacing 1.2
 set key reverse
 set key Left
 set key font "Helvetica,18"
-set size 0.8,0.7
+set size 1.6,0.7
 
 set xrange [0:291]
 set xtics 50
