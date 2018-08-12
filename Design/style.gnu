@@ -21,8 +21,8 @@ set style line 14 lt 4 lc "#C4AD66" pt 13 lw 6
 set style line 15 lt 4 lc "#77BEDB" pt 13 lw 6
 
 set style line 16 lt 4 lc "#4878CF" pt 13 lw 4 dt 5
-set style line 17 lt 4 lc "#6ACC65" pt 13 lw 6 dt 5 
-set style line 18 lt 4 lc "#D65F5F" pt 13 lw 6 dt 3
+set style line 17 lt 4 lc "#6ACC65" pt 13 lw 4 dt 3 
+set style line 18 lt 4 lc "#D65F5F" pt 13 lw 4 dt 4
 
 set style line 19 lt 4 lc rgb "red" pt 13 lw 4 dt 3
 set style line 20 lt 4 lc rgb "green" pt 13 lw 4 dt 3
