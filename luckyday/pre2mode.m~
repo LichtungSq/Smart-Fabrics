@@ -28,19 +28,19 @@ holding_tmp = zeros(length(pressure),1);
 for i = 1:length(pressure)
     if flag(i) == 0 && pressure_per(i) < -0.15
         holding_tmp(i) = 1;
-        if i > 1 && holding_tmp(i-1) == 0
-            holding_point(i) = -1;
+        if holding_tmp(i-1) == 0
+            holding_point(i) = 1;
         end
     else
         if holding_tmp(i-1) == 1
-            holding_point(i) = 1;
+            holding_point(i) = -1;
         end
     end 
 end
 
-% figure(1)
-% hold on
-% plot(t,pressure_per,'k');
-% plot(t,holding_point,'r');
-% % line([0 80],[200 200],'-r');
-% % plot(t,flag+960,'r');
+figure(1)
+hold on
+plot(t,pressure_per,'k');
+plot(t,holding_point,'r');
+% line([0 80],[200 200],'-r');
+% plot(t,flag+960,'r');

@@ -13,7 +13,7 @@ set style line 8 lt 4 lc rgb "magenta" lw 8
 
 set style line 9 lt 4 lc rgb "red" pt 13 lw 4 ps 2
 
-set style line 10 lt 4 lc "#4878CF" pt 13 lw 6
+set style line 10 lt 4 lc "#4878CF" pt 13 lw 8
 set style line 11 lt 4 lc "#6ACC65" pt 13 lw 6
 set style line 12 lt 4 lc "#D65F5F" pt 13 lw 6
 set style line 13 lt 4 lc "#B47CC7" pt 13 lw 6
@@ -24,9 +24,8 @@ set style line 16 lt 4 lc "#4878CF" pt 13 lw 4 dt 5
 set style line 17 lt 4 lc "#4878CF" pt 13 lw 4 dt 3 
 set style line 18 lt 4 lc "#4878CF" pt 13 lw 4 dt 2
 
-set style line 19 lt 4 lc rgb "red" pt 13 lw 6 dt 3
-set style line 20 lt 4 lc rgb "green" pt 13 lw 6 dt 3
-set style line 21 lt 4 lc rgb "red" pt 13 lw 4 dt 3
+set style line 19 lt 4 lc rgb "red" pt 13 lw 8 dt 3
+set style line 21 lt 4 lc rgb "#D65F5F" pt 13 lw 4 dt 3
 set style line 22 lt 4 lc rgb "green" pt 13 lw 4 dt 3
 set style line 23 lt 4 lc "#4878CF" pt 13 lw 1
 set style line 24 lt 4 lc "#4878CF" pt 13 lw 6 
