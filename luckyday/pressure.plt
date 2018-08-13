@@ -21,8 +21,8 @@ set ytics 0.2
 set xlabel "Time(sec)" offset 0,0.2
 set ylabel "R Change Ratio" offset 1,0
 
-plot "pre_1_layer_sg.csv" using 1:2 title "Sample 1" w l ls 10,\
-y=0.0233 using 1:2 title "Sample 2" w l ls 11,\
+plot "relaxation.csv" using 1:2 title "Sample 1" w l ls 10,\
+     0.0233*exp(-0.04591*(x-32.7646)) using 1:2 title "Sample 2" w l ls 11,\
 
 
    
