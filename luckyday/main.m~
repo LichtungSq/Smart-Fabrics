@@ -1,5 +1,3 @@
-%input: startpoint_1 startpoint_2
-
 sensor1_tmp = load('new_strain_1.txt');
 sensor2_tmp = load('new_strain_2.txt');
 pressure_tmp = load('new_pressure.txt');
