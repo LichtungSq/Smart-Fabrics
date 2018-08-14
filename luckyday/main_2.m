@@ -41,18 +41,28 @@ sensor2_per = 1023.*(sensor2_loess-startpoint_2)/startpoint_2./(1023-sensor2_loe
 stretch = zeros(length(sensor2),1);
 
 for i = 1:length(sensor2)      
-    if mode_1(i) == 0 && sensor2_per(i) > 0.2
+    if abs(mode_1(i)) < 0.1 && sensor2_per(i) > 0.2
+        
         j = length(find(up_point <= i));
         k = find(down_point > i);
                 
-        if j > 0 && k(1) > 0 && up_point(i) > 1 && down_point(k(1)) > 0
-            start_value = sensor2_per(up_point(i)-1);
-            end_value = sensor2_per(down_point(k(1)));
-            sensor2_per(i) = start_value + (start_value - end_value)/(down_point(k(1)) - up_point(i) + 1) * (i - up_point(i) + 1);
-        end
+        if j > 0 && ~isempty(k) 
+            if up_point(j) > 1 && down_point(k(1)) > 0
+                start_value = sensor2_per(up_point(j)-1);
+                end_value = sensor2_per(down_point(k(1)));
+                stretch(i) = start_value;
+%                 stretch(i) = start_value + (end_value - start_value)/(t_2(down_point(k(1))) - t_2(up_point(j) - 1)) * (t_2(i) - t_2(up_point(j) - 1));
 
+            end
+        end
+    else
+        stretch(i) = sensor2_per(i);
     end        
 end  
 
-
+stretch_loess = smooth(stretch, 35, 'rlowess', 2);
+figure(2)
+hold on
+plot(t_2, stretch);
+plot(t_2, sensor2_per);
 
