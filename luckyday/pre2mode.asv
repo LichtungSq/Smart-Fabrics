@@ -14,10 +14,10 @@ for i = 0:length(pressure_loess)-length(buffer)
     buffer = [buffer(2:end);pressure_loess(i+length(buffer))];
     [r,k,b] = regression(t(i+1:i+length(buffer))', buffer');
     
-    if k > 8
+    if k > 10
         flag(i+1:i+length(buffer),1) = -30;
     end
-    if k < -8
+    if k < -10
         flag(i+1:i+length(buffer),1) = 30;
     end
 end
