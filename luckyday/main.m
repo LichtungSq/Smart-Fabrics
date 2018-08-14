@@ -16,10 +16,10 @@ sensor1_loess = smooth(sensor1,11,'rlowess',2);
 sensor2_loess = smooth(sensor2,11,'rlowess',2);
 
 mode_1 = pre2mode(pressure_tmp);
-mode_2 = strain_sensor2mode(sensor2_tmp);
+% mode_2 = strain_sensor2mode(sensor2_tmp);
 
-sensor1_per = ((1023-startpoint_1)*sensor1_loess/startpoint_1/(1023-sensor1_loess)-1);
-sensor2_per = ((1023-startpoint_2)*sensor2_loess/startpoint_2/(1023-sensor2_loess)-1);
+% sensor1_per = ((1023-startpoint_1)*sensor1_loess/startpoint_1/(1023-sensor1_loess)-1);
+% sensor2_per = ((1023-startpoint_2)*sensor2_loess/startpoint_2/(1023-sensor2_loess)-1);
 
-if mode_1 == 30 && mode_2 == 30
+% if mode_1 == 30 && mode_2 == 30
     
