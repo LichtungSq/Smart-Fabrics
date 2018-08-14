@@ -64,13 +64,17 @@ end
 %         stretch(i) = sensor2_per(i);
 %     end        
 % end  
-
-stretch_loess = smooth(stretch, 25, 'rlowess', 2);
-kinect = 
+for i = 1:floor(length(t_2)/(length(t_2) - length(t_k))):length(t_2)
+    t_2(i) = 0;
+    stretch(i) = 0;
+end
+t_2_short = t_2(t_2 ~= 0);
+stretch_short = stretch(stretch ~= 0);
+stretch_loess = smooth(stretch_short, 25, 'rlowess', 2);
 
 figure(2)
 hold on
-plot(t_2, stretch*133.5,'r');
+plot(t_2_short, stretch_short*151.8,'r');
 plot(t_k - 5.89, kinect,'b');
-figure(3)
-plot(t_2, stretch*133.5 - kinect,'k')
+% figure(3)
+% plot(t_2, stretch*133.5 - kinect,'k')

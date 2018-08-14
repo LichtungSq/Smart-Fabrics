@@ -12,6 +12,7 @@ sensor2_tmp = load('new_strain_2.txt');
 pressure_tmp = load('new_pressure.txt');
 kinect_tmp = load('output_luckyday_3.txt');
 
+
 t_1 = sensor1_tmp(:,1);
 sensor1 = sensor1_tmp(:,2);
 t_2 = sensor2_tmp(:,1);
@@ -19,12 +20,22 @@ sensor2 = sensor2_tmp(:,2);
 t_k = kinect_tmp(:,1);
 kinect = kinect_tmp(:,end);
 
-sensor1_loess = smooth(sensor1,11,'rlowess',2);
-sensor2_loess = smooth(sensor2,11,'rlowess',2);
+slope_cmp = 0.2 * t_2;
 
+sensor1_loess = smooth(sensor1,25,'rlowess',2);
+sensor2_loess = smooth(sensor2 + slope_cmp,25,'rlowess',2);
+
+% findpeak
 startpoint_1 = min(sensor1_loess);
 startpoint_2 = min(sensor2_loess);
 
+% mode_2 = strain_sensor2mode(sensor2_tmp);
+
+% sensor1_per = ((1023-startpoint_1)*sensor1_loess/startpoint_1/(1023-sensor1_loess)-1);
+% sensor2_per = ((1023-startpoint_2)*sensor2_loess/startpoint_2/(1023-sensor2_loess)-1);
+
+% if mode_1 == 30 && mode_2 == 30
+    
 [mode_1, pressure_per, holding_point] = pre2mode(pressure_tmp);
 mode_2 = strain_sensor2mode(sensor2_tmp);
 up_point = find(holding_point == 1);
@@ -66,7 +77,8 @@ for i = 1:length(sensor2)
         j = length(find(up_point <= i));
         k = length(find(move_locs <= i));
         if j > 0
-            compensated_value = sensor2_per(i) - 0.0233 * exp(-0.04591*(t_2(i) - t_2(up_point(j)))) - 0.0233;
+%             compensated_value = sensor2_per(i) - 0.0233 * exp(-0.04591*(t_2(i) - t_2(up_point(j)))) - 0.0233;
+            compensated_value = 0;
         else
             compensated_value = 0;
         end
@@ -85,6 +97,3 @@ for i = 1:length(sensor2)
         end
     end        
 end  
-
-
-
