@@ -30,7 +30,7 @@ startpoint_1 = min(sensor1_loess);
 startpoint_2 = min(sensor2_loess);
 
 [mode_1, pressure_per, holding_point] = pre2mode(pressure_tmp);
-mode_2 = strain_sensor2mode(sensor2_tmp);
+% mode_2 = strain_sensor2mode(sensor2_tmp);
 up_point = find(holding_point == 1);
 down_point = find(holding_point == -1);
 move_locs = find(mode_1 ~= 0);
@@ -50,7 +50,9 @@ for i = 1:length(sensor2)
             if up_point(j) > 1 && down_point(k(1)) > 0
                 start_value = sensor2_per(up_point(j)-1);
                 end_value = sensor2_per(down_point(k(1)));
+                stretch(i) = start_value;
 %                 stretch(i) = start_value + (end_value - start_value)/(t_2(down_point(k(1))) - t_2(up_point(j) - 1)) * (t_2(i) - t_2(up_point(j) - 1));
+
             end
         end
     else
@@ -59,7 +61,6 @@ for i = 1:length(sensor2)
 end  
 
 stretch_loess = smooth(stretch, 35, 'rlowess', 2);
-figure(2)
 hold on
 plot(t_2, stretch);
 plot(t_2, sensor2_per);
