@@ -64,12 +64,17 @@ end
 %         stretch(i) = sensor2_per(i);
 %     end        
 % end  
-for i = 1:floor(length(t_2)/(length(t_2) - length(t_k))):length(t_2)
-    t_2(i) = 0;
-    stretch(i) = 0;
+t_2_short = t_2;
+while length(t_2_short) > length(t_k)
+    for i = 1:floor(length(t_2_short)/(length(t_2_short) - length(t_k)))+1:length(t_2_short)
+        t_2(i) = 0;
+        stretch(i) = 0;
+    end
+    t_2_short = t_2(t_2 ~= 0);
+    stretch_short = stretch(stretch ~= 0);
 end
-t_2_short = t_2(t_2 ~= 0);
-stretch_short = stretch(stretch ~= 0);
+
+
 stretch_loess = smooth(stretch_short, 25, 'rlowess', 2);
 
 figure(2)
