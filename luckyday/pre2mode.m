@@ -6,7 +6,6 @@ pressure_loess = smooth(pressure,35,'rlowess',2);
 startpoint = max(pressure_loess);
 % disp(startpoint);
 pressure_per = 1023.*(pressure_loess-startpoint)/startpoint./(1023-pressure_loess);
-% pressure_per = (1023-pressure_loess)*startpoint/pressure_loess/(1023-startpoint)-1;
 
 buffer = [0;pressure_loess(1:10,1)];
 flag = zeros(length(pressure_loess),1);
@@ -14,11 +13,11 @@ for i = 0:length(pressure_loess)-length(buffer)
     
     buffer = [buffer(2:end);pressure_loess(i+length(buffer))];
     [r,k,b] = regression(t(i+1:i+length(buffer))', buffer');
-    
-    if k > 10
+
+    if k > 8
         flag(i+1:i+length(buffer),1) = -30;
     end
-    if k < -10
+    if k < -8
         flag(i+1:i+length(buffer),1) = 30;
     end
 end

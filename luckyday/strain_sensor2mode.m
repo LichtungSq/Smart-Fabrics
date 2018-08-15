@@ -13,10 +13,10 @@ for i = 0:length(strain_loess)-length(buffer)
     [r,k,b] = regression(t(i+1:i+length(buffer))', buffer');
     
     if k > 20
-        flag(i+1:i+length(buffer),1) = 30;
+        flag(i+1:i+length(buffer),1) = 1;
     end
     if k < -20
-        flag(i+1:i+length(buffer),1) = -30;
+        flag(i+1:i+length(buffer),1) = -1;
     end
 end
 
