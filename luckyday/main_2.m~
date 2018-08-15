@@ -22,59 +22,46 @@ kinect = kinect_tmp(:,end);
 
 slope_cmp = 0.2 * t_2;
 
-sensor1_loess = smooth(sensor1,25,'rlowess', 2);
-sensor2_loess = smooth(sensor2 + slope_cmp, 25, 'rlowess', 2);
+sensor1_loess = smooth(sensor1,51,'rlowess', 2);
+sensor2_loess = smooth(sensor2 + slope_cmp, 51, 'rlowess', 2);
 
 % findpeak
 startpoint_1 = min(sensor1_loess);
 startpoint_2 = min(sensor2_loess);
 
 [mode_1, pressure_per, holding_point] = pre2mode(pressure_tmp);
-mode_2 = strain_sensor2mode(sensor2_tmp);
+% mode_2 = strain_sensor2mode(sensor2_tmp);
 up_point = find(holding_point == 1);
 down_point = find(holding_point == -1);
-if length(up_point) < length(down_point)
-    down_point = down_point(2:end);
-end
-% move_locs = find(mode_1 ~= 0);
+move_locs = find(mode_1 ~= 0);
 
 sensor1_per = 1023.*(sensor1_loess-startpoint_1)/startpoint_1./(1023-sensor1_loess);
 sensor2_per = 1023.*(sensor2_loess-startpoint_2)/startpoint_2./(1023-sensor2_loess);
 
-stretch = sensor2_per;
+stretch = zeros(length(sensor2),1);
 
-for i = 1:length(up_point)
-    stretch(up_point(i):down_point(i)-1) = sensor2_per(up_point(i) - 1);
-end
-% for i = 1:length(sensor2)      
-%     if abs(mode_1(i)) < 0.1 && sensor2_per(i) > 0.2
-%         
-%         j = length(find(up_point <= i));
-%         k = find(down_point > i);
-%                 
-%         if j > 0 && ~isempty(k) 
-%             if up_point(j) > 1 && down_point(k(1)) > 0
-%                 start_value = sensor2_per(up_point(j)-1);
-%                 end_value = sensor2_per(down_point(k(1)));
-%                 stretch(i) = start_value;
-% %                 stretch(i) = start_value + (end_value - start_value)/(t_2(down_point(k(1))) - t_2(up_point(j) - 1)) * (t_2(i) - t_2(up_point(j) - 1));
-%             end
-%         end
-%     else
-%         stretch(i) = sensor2_per(i);
-%     end        
-% end  
-for i = 1:floor(length(t_2)/(length(t_2) - length(t_k))):length(t_2)
-    t_2(i) = 0;
-    stretch(i) = 0;
-end
-t_2_short = t_2(t_2 ~= 0);
-stretch_short = stretch(stretch ~= 0);
-stretch_loess = smooth(stretch_short, 25, 'rlowess', 2);
+for i = 1:length(sensor2)      
+    if abs(mode_1(i)) < 0.1 && sensor2_per(i) > 0.2
+        
+        j = length(find(up_point <= i));
+        k = find(down_point > i);
+                
+        if j > 0 && ~isempty(k) 
+            if up_point(j) > 1 && down_point(k(1)) > 0
+                start_value = sensor2_per(up_point(j)-1);
+                end_value = sensor2_per(down_point(k(1)));
+                stretch(i) = start_value;
+%                 stretch(i) = start_value + (end_value - start_value)/(t_2(down_point(k(1))) - t_2(up_point(j) - 1)) * (t_2(i) - t_2(up_point(j) - 1));
 
-figure(2)
+            end
+        end
+    else
+        stretch(i) = sensor2_per(i);
+    end        
+end  
+
+stretch_loess = smooth(stretch, 35, 'rlowess', 2);
 hold on
-plot(t_2_short, stretch_short*151.8,'r');
-plot(t_k - 5.89, kinect,'b');
-% figure(3)
-% plot(t_2, stretch*133.5 - kinect,'k')
+plot(t_2, stretch);
+plot(t_2, sensor2_per);
+
