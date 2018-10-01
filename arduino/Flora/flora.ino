@@ -1,8 +1,9 @@
 
-const int analogInPin_1 = A11;  // Analog input pin that the potentiometer is attached to
+// flora's PIN definition
+const int analogInPin_1 = A11;  
 const int analogInPin_2 = A7;
 const int analogInPin_3 = A9;
-const int analogInPin_4 = A10;
+// const int analogInPin_4 = A10;
 
 int sensorValue_1 = 0;        // value read from the pot
 int outputValue_1 = 0;         // value output to the PWM (analog out)
@@ -38,7 +39,7 @@ int smooth(int data, float filterVal, float smoothedVal){
 
 void loop() {
   // read the analog in value:
-    sensorValue_1 = smooth(analogRead(analogInPin_1), 0.3, sensorValue_1);
+    sensorValue_1 = analogRead(analogInPin_1);
 //   map it to the range of the analog out:
  outputValue_1 = map(sensorValue_1, 0, 1023, 0, 255);
 
@@ -65,17 +66,17 @@ Serial.print(' ');
 //   print the results to the Serial Monitor:
 
  	  Serial.print(outputValue_1);
-     Serial.print(' ');
-//  	Serial.println("a");
+    //Serial.print(' ');
+  	Serial.println("a");
 ////    Serial.flush();
 
   	Serial.print(outputValue_2);
-    Serial.print(' ');
-//  	Serial.println("b");
+    // Serial.print(' ');
+  	Serial.println("b");
 ////    Serial.flush();
 
-   Serial.println(outputValue_3);
-//   Serial.println("c");
+   Serial.print(outputValue_3);
+   Serial.println("c");
 ////   Serial.flush();
 
 //   Serial.print(outputValue_4);

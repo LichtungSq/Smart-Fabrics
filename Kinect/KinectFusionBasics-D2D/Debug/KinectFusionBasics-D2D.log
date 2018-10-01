@@ -1,9 +1,0 @@
-﻿  Timer.cpp
-  KinectFusionBasics.cpp
-c:\users\litia\desktop\kinect samples\native\kinectfusionbasics-d2d\kinectfusionbasics.cpp(182): warning C4302: 'type cast': truncation from 'LPWSTR' to 'WORD'
-  ImageRenderer.cpp
-  Generating Code...
-  KinectFusionBasics-D2D.vcxproj -> C:\Users\litia\Desktop\Kinect Samples\Native\KinectFusionBasics-D2D\Debug\KinectFusionBasics-D2D.exe
-  KinectFusionBasics-D2D.vcxproj -> C:\Users\litia\Desktop\Kinect Samples\Native\KinectFusionBasics-D2D\Debug\KinectFusionBasics-D2D.pdb (Full PDB)
-  C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Redist\Fusion\x86\Kinect20.Fusion.dll
-  1 File(s) copied

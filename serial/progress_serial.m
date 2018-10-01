@@ -1,12 +1,12 @@
 delete(instrfindall);
-s = serial('COM4');        
+s = serial('COM3');        
 set(s,'BaudRate',115200);    
 
 fopen(s);
 
-fid_v1 = fopen('./luckyday_3/new_strain_1.txt','a+');
-fid_v2 = fopen('./luckyday_3/new_strain_2.txt','a+');
-fid_p = fopen('./luckyday_3/new_pressure.txt','a+');
+fid_v1 = fopen('./new_strain_1.txt','a+');
+fid_v2 = fopen('./new_strain_2.txt','a+');
+fid_p = fopen('./new_pressure.txt','a+');
 
 figure(1)
 h_voltage_1 = animatedline;
