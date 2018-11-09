@@ -30,15 +30,18 @@ startpoint_1 = min(sensor1_loess);
 startpoint_2 = min(sensor2_loess);
 
 [mode_1, pressure_per, holding_point] = pre2mode(pressure_tmp);
-mode_2 = strain_sensor2mode(sensor2_tmp);
+% mode_2 = strain_sensor2mode(sensor2_tmp);
 up_point = find(holding_point == 1);
 down_point = find(holding_point == -1);
+<<<<<<< HEAD
+=======
 if length(up_point) < length(down_point)
     down_point = down_point(2:end);
 end
+>>>>>>> b6fac627d18a3c5600c54c4c9cdce6d22f2799c8
 % move_locs = find(mode_1 ~= 0);
 
-sensor1_per = 1023.*(sensor1_loess-startpoint_1)/startpoint_1./(1023-sensor1_loess);
+% sensor1_per = 1023.*(sensor1_loess-startpoint_1)/startpoint_1./(1023-sensor1_loess);
 sensor2_per = 1023.*(sensor2_loess-startpoint_2)/startpoint_2./(1023-sensor2_loess);
 
 stretch = sensor2_per;
@@ -72,7 +75,18 @@ t_2_short = t_2(t_2 ~= 0);
 stretch_short = stretch(stretch ~= 0);
 stretch_loess = smooth(stretch_short, 25, 'rlowess', 2);
 
+<<<<<<< HEAD
+            end
+        end
+    else
+        stretch(i) = sensor2_per(i);
+    end        
+end  
+
+stretch_loess = smooth(stretch, 35, 'rlowess', 2);
+=======
 figure(2)
+>>>>>>> b6fac627d18a3c5600c54c4c9cdce6d22f2799c8
 hold on
 plot(t_2_short, stretch_short*151.8,'r');
 plot(t_k - 5.89, kinect,'b');
